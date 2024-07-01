@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
+import AuthSessionProvider from "@/components/providers/AuthSessionProvider";
+import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast"
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <AuthSessionProvider>
+        <body className={nunito.className}>
+          <Toaster />
+          <Navbar />
+          {children}
+        </body>
+      </AuthSessionProvider>
     </html>
   );
 }
