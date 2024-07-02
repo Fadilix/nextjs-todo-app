@@ -1,5 +1,5 @@
 # NextJS TodoApp
-A simple todo app in nextjs
+Todo app in nextjs
 #
 ![image](https://github.com/Fadilix/nextjs-todo-app/assets/121851593/52569bd1-16ee-41ea-8731-0999fb81d930)
 #
@@ -32,6 +32,10 @@ npm install
     cp .env.example .env.local
     ```
 - Replace the database url in the env file by your own database url path
+- Start a migration to add the models to the database
 
+```bash
+npx prisma migrate dev
+```
 
 ### There you go
