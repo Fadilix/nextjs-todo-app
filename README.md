@@ -33,9 +33,9 @@ npm install
     ```
 - Replace the database url in the env file by your own database url path
 - Start a migration to add the models to the database
-
-```bash
-npx prisma migrate dev
-```
+    
+    ```bash
+    npx prisma migrate dev
+    ```
 
 ### There you go
