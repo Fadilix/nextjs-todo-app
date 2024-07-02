@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import SaaSLandingImage from "../assets/image.png";
 import Image from "next/image";
 export default function Home() {
+  console.log(localStorage.getItem("date"));
   return (
     <main className="overflow-x-hidden grid-background">
       <Navbar />
