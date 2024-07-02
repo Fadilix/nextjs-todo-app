@@ -42,13 +42,14 @@ import { Dialog, DialogClose, DialogFooter, DialogHeader } from "@/components/ui
 import { DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from "@/components/ui/label";
 import { TododDatePicker } from "./TodoDatePicker";
-import { useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
+// import { useRouter } from "next/navigation";
 
 type Task = {
   id: string;
   name: string;
   isDone: boolean;
-  dueDate: string; // Adjust type if you use Date objects instead
+  dueDate: Date;
 };
 
 export const columns: ColumnDef<Task>[] = [
@@ -105,8 +106,15 @@ export const columns: ColumnDef<Task>[] = [
       // const router = useRouter();
 
       const [taskName, setTaskName] = React.useState(todo.name);
-      const currDate = format(todo.dueDate, "dd MMMM yyyy")
+      const localStorageDate = localStorage.getItem("date")
+      const currDate = format(todo.dueDate, "dd MMMM yyyy");
       const [currentDate, setCurrentDate] = React.useState(currDate);
+
+      React.useEffect(() => {
+        console.log(localStorageDate);
+        setCurrentDate(localStorageDate as string);
+
+      }, [localStorageDate])
       const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTaskName(e.target.value);
         console.log(taskName);
@@ -116,12 +124,13 @@ export const columns: ColumnDef<Task>[] = [
       // }, [currentDate])
 
       const handleTodoUpdate = async (id: string, data: any) => {
+        console.log(id, data)
         await fetch("/api/todos", {
           method: "PUT",
           headers: {
             "content-type": "application/json",
           },
-          body: JSON.stringify({ id, data })
+          body: JSON.stringify({ id, ...data })
         })
       }
 
@@ -177,7 +186,7 @@ export const columns: ColumnDef<Task>[] = [
                 <DialogFooter>
                   <DialogClose asChild>
                     <Button type="submit"
-                      onClick={() => handleTodoUpdate(todo.id, { name: taskName, dueDate: currentDate })}
+                      onClick={() => handleTodoUpdate(todo.id, { name: taskName, dueDate: new Date() })}
                     >Save changes
                     </Button>
                   </DialogClose>
@@ -194,7 +203,10 @@ export const columns: ColumnDef<Task>[] = [
                     "content-type": "application/json"
                   },
                   body: JSON.stringify({ id: todo.id }),
-                })
+                  next: { revalidate: 0 }
+                },)
+
+                revalidatePath("/todos")
               }}
             >
               Delete
@@ -218,12 +230,7 @@ export function Todos() {
 
   const fetchTodos = async () => {
     try {
-      const res = await fetch("/api/todos", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch("/api/todos", { next: { revalidate: 0 } });
       const response = await res.json();
       setData(response.todos);
     } catch (error) {

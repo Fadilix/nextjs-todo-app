@@ -42,6 +42,10 @@ export const PUT = async (req: NextRequest) => {
       message: `Todo ${data.id} updated successfully`,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return NextResponse.json(
+      { message: "Failed to update todo" },
+      { status: 500 }
+    );
   }
 };
