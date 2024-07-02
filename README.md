@@ -32,4 +32,6 @@ npm install
     cp .env.example .env.local
     ```
 - Replace the database url in the env file by your own database url path
-There you go
+
+
+### There you go
