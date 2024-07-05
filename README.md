@@ -6,7 +6,7 @@ Todo app in nextjs
 
 
 ## Technologies Used
-- **Frontend**: React.js, Next.js, Tailwind CSS
+- **Frontend**: Next.js, Next.js, Tailwind CSS
 - **Backend**: Next.js API Routes
 - **Authentication**: NextAuth.js with GitHub provider
 - **Database**: PostgreSQL with Prisma as the ORM
