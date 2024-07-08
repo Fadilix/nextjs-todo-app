@@ -14,6 +14,7 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   try {
     const data = await req.json();
+   
     const { name, userId, dueDate, isDone } = data;
 
     const newTodo = await createTodo(name, userId, new Date(dueDate), isDone);

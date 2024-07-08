@@ -17,7 +17,6 @@ const Navbar = () => {
                     <Link href="/">{session?.user?.name}</Link>
                     <button className="rounded-xl border border-black p-2" onClick={() => signOut()}>Sign out</button>
                 </div>
-
             ) : (
                 <button className="rounded-xl border border-black p-2" onClick={() => signIn()}>Sign in</button>
             )}
