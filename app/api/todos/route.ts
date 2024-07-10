@@ -25,6 +25,7 @@ export const POST = async (req: NextRequest) => {
 };
 
 
+
 export const DELETE = async (req: NextRequest) => {
   const { id } = await req.json();
   try {
